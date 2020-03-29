@@ -1,5 +1,5 @@
 async function getTabs() {
-  let tabs = await browser.tabs.query({});
+  let tabs = await browser.tabs.query({currentWindow: true});
   var current = browser.windows.getCurrent();
   console.log("gettabs")
   current.then((response)=>console.log("windowID: " + response.id));
