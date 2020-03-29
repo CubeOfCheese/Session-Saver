@@ -1,4 +1,4 @@
-async function getTabs() {
+async function saveSession() {
   let tabs = await browser.tabs.query({currentWindow: true});
   var current = browser.windows.getCurrent();
   current.then((response)=>console.log("windowID: " + response.id));
@@ -11,6 +11,6 @@ async function getTabs() {
   browser.storage.local.set({ session1 : sessionTabs });
 }
 browser.browserAction.onClicked.addListener(() => {
-  console.log(getTabs());
+  console.log(saveSession());
   // browser.tabs.create({"url": "www.google.com"});
 });

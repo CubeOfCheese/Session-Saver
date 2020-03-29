@@ -22,11 +22,5 @@
 	"browser_action": {
 	 "default_icon": "icons/save-24px.svg",
 	 "default_title": "Session Saver"
- },
-	"content_scripts": [
-	  {
-		"matches": ["*://*.mozilla.org/*"],
-		"js": ["panel.js"]
-	  }
-	]
+ }
 }
