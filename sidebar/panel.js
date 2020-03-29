@@ -1,5 +1,3 @@
-console.log("this won't show will it");
-
 let backgroundPage = browser.extension.getBackgroundPage();
 var saveNewBtn = document.querySelector('button[name="save-new"]');
 var loadBtn = document.querySelector('button[name="load-sess"]');
@@ -8,7 +6,6 @@ loadBtn.addEventListener('click', loadSession);
 
 
 function saveSession() {
-  document.body.style.border = "5px solid yellow";
   backgroundPage.saveSession();
 }
 
@@ -32,6 +29,4 @@ function loadSession() {
   }
 
   );
-  console.log("loadSession")
-
 }
