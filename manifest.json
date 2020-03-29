@@ -1,0 +1,31 @@
+{
+	"manifest_version": 2,
+	"name": "Borederify",
+	"version": "1.0",
+	"description": "Adds a red border to web pages matching mozilla.org",
+	"icons": {
+	  "48": "icons/border-48.png"
+	},
+	"sidebar_action": {
+	  "default_icon": "icons/border-48.png",
+	  "default_title" : "Session Saver",
+	  "default_panel": "sidebar/panel.html"
+	},
+	"background": {
+	  "scripts": ["background.js"]
+	},
+	"permissions": [
+    "bookmarks",
+    "tabs"
+  ],
+	"browser_action": {
+	 "default_icon": "icons/border-48.png",
+	 "default_title": "Session Saver"
+ },
+	"content_scripts": [
+	  {
+		"matches": ["*://*.mozilla.org/*"],
+		"js": ["panel.js"]
+	  }
+	]
+}
