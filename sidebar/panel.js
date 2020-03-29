@@ -1,11 +1,37 @@
-document.body.style.border = "5px solid red";
+console.log("this won't show will it");
+
 let backgroundPage = browser.extension.getBackgroundPage();
-console.log(backgroundPage);
+var saveNewBtn = document.querySelector('button[name="save-new"]');
+var loadBtn = document.querySelector('button[name="load-sess"]');
+saveNewBtn.addEventListener('click', saveSession);
+loadBtn.addEventListener('click', loadSession);
 
-function print() {
+
+function saveSession() {
   document.body.style.border = "5px solid yellow";
+  backgroundPage.saveSession();
+}
 
-  backgroundPage.getTabs();
+function onCreated(tab) {
+  console.log(`Created new tab: ${tab.id}`)
+}
 
-  console.log("Hi I did it")
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+
+function loadSession() {
+  var session1 = browser.storage.local.get("session1");
+  var tabURLs;
+  session1.then((response)=>tabURLs = response.session1.split(", ")).then((response)=>{
+    for (var i = 0; i<tabURLs.length; i++) {
+      console.log(tabURLs[i])
+      var newTab = browser.tabs.create({url:tabURLs[i]});
+      newTab.then(onCreated, onError);
+    }
+  }
+
+  );
+  console.log("loadSession")
+
 }
