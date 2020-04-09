@@ -2,9 +2,9 @@ browser.storage.local.set({ sessionCounter : 0 });
 
 async function saveSession() {
   let tabs = await browser.tabs.query({currentWindow: true});
-  var sessionTabs = tabs[0].url;
+  var sessionTabs = [];
   for (var i = 1; i < tabs.length; i++) {
-    sessionTabs = sessionTabs + ", " + tabs[i].url;
+    sessionTabs[i] = tabs[i].url;
   }
   var numberOfSavedSessions = browser.storage.local.get("sessionCounter");
   numberOfSavedSessions.then((response)=> {
