@@ -46,13 +46,11 @@ function onError(error) {
 
 function loadSession(sessionKey) {
   var session = browser.storage.local.get(sessionKey);
-  var tabURLs;
-  session.then((response)=>tabURLs = response[sessionKey].split(", ")).then((response)=>{
+  session.then((response)=>{
+    var tabURLs = response[sessionKey];
     for (var i = 0; i<tabURLs.length; i++) {
       var newTab = browser.tabs.create({url:tabURLs[i]});
       newTab.then(onCreated, onError);
     }
-  }
-
-  );
+  });
 }
