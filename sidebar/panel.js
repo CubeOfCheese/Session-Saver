@@ -1,15 +1,39 @@
-console.log("this won't show will it");
-
 let backgroundPage = browser.extension.getBackgroundPage();
+let sessionList = document.querySelector('ul[id="session-list"]');
 var saveNewBtn = document.querySelector('button[name="save-new"]');
-var loadBtn = document.querySelector('button[name="load-sess"]');
 saveNewBtn.addEventListener('click', saveSession);
-loadBtn.addEventListener('click', loadSession);
 
+// when extension started, updates ui with load-session-buttons
+var numberOfSavedSessions = browser.storage.local.get("sessionCounter");
+numberOfSavedSessions.then((response)=>{
+  for (var i = 0; i < response.sessionCounter; i++) {
+    var session = browser.storage.local.get("session " + i);
+    session.then(()=>{
+      var button = document.createElement("BUTTON");
+      button.innerHTML = "session " + i;
+      button.onclick = function(){loadSession("session " + i)};
+      sessionList.append(button);
+    });
+  }
+});
+
+// used to add new button when a session is saved
+function updateUI() {
+  var numberOfSavedSessions = browser.storage.local.get("sessionCounter");
+  numberOfSavedSessions.then((response)=>{
+      var session = browser.storage.local.get("session" + response.sessionCounter);
+      session.then(()=>{
+        var button = document.createElement("BUTTON");
+        button.innerHTML = "session " + (response.sessionCounter + 1);
+        button.onclick = function(){loadSession("session " + (response.sessionCounter + 1))};
+        sessionList.append(button);
+    }
+  )})
+}
 
 function saveSession() {
-  document.body.style.border = "5px solid yellow";
   backgroundPage.saveSession();
+  updateUI();
 }
 
 function onCreated(tab) {
@@ -20,18 +44,15 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
-function loadSession() {
-  var session1 = browser.storage.local.get("session1");
+function loadSession(sessionKey) {
+  var session = browser.storage.local.get(sessionKey);
   var tabURLs;
-  session1.then((response)=>tabURLs = response.session1.split(", ")).then((response)=>{
+  session.then((response)=>tabURLs = response[sessionKey].split(", ")).then((response)=>{
     for (var i = 0; i<tabURLs.length; i++) {
-      console.log(tabURLs[i])
       var newTab = browser.tabs.create({url:tabURLs[i]});
       newTab.then(onCreated, onError);
     }
   }
 
   );
-  console.log("loadSession")
-
 }
