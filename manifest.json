@@ -1,13 +1,13 @@
 {
 	"manifest_version": 2,
-	"name": "Borederify",
+	"name": "Session Saver",
 	"version": "1.0",
 	"description": "Adds a red border to web pages matching mozilla.org",
 	"icons": {
-	  "48": "icons/border-48.png"
+	  "48": "icons/save-24px.svg"
 	},
 	"sidebar_action": {
-	  "default_icon": "icons/border-48.png",
+	  "default_icon": "icons/save-24px.svg",
 	  "default_title" : "Session Saver",
 	  "default_panel": "sidebar/panel.html"
 	},
@@ -16,16 +16,11 @@
 	},
 	"permissions": [
     "bookmarks",
+		"storage",
     "tabs"
   ],
 	"browser_action": {
-	 "default_icon": "icons/border-48.png",
+	 "default_icon": "icons/save-24px.svg",
 	 "default_title": "Session Saver"
- },
-	"content_scripts": [
-	  {
-		"matches": ["*://*.mozilla.org/*"],
-		"js": ["panel.js"]
-	  }
-	]
+ }
 }
